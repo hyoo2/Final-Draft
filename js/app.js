@@ -1,10 +1,39 @@
 /**
  * Created by marcocheng on 11/26/14.
  */
+Parse.initialize("D09HDt6HuQzXIeXzkPi5rTLfQ8KMPUBwrORQlbBo", "pmEX9dbQy1YmCb9nw7ekEOko2eSntIMbvr3LgZqV");
+
 $(document).ready(function() {
 
-    $('#signUp').click(function() {
-        alert('it works');
+
+    $('#logout').click( function() {
+            Parse.User.logOut();
+            $('#logout').hide();
+            $('#signUp').show();
+            $('#logIn').show();
+    });
+
+    $('#submit').click(function() {
+        var user = new Parse.User();
+        user.set("username", $('#username').val());
+        user.set("password", $("#password").val());
+        user.set("email", $('#email').val());
+        user.signUp( null, {
+            success: function(user) {
+                //Need to show username on nav bar
+            }
+        });
+    });
+
+    $("#loginsubmit").click(function () {
+        Parse.User.logIn($('#loginusername').val(), $("#loginpassword").val(), {
+            success: function (user) {
+                console.log("User logged in");
+                $('#logout').show();
+                $('#signUp').hide();
+                $('#logIn').hide();
+            }
+        })
     });
 
     $('#login').click(function() {

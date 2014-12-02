@@ -38,7 +38,7 @@ h6 {
     padding-right: 1em;
 }
 
-#submit {
+#submit, #loginsubmit {
     margin-top: 0.5em;
 }
 
@@ -85,7 +85,6 @@ h6 {
     text-align: center;
 }
 
-#loginModal {
-    width: 50%;
-    height: 50%;
+#logout{
+    display: none;
 }
