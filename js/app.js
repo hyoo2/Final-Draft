@@ -131,9 +131,9 @@ $(document).ready(function() {
                 var results = response.rows[i].elements;
                 for (var j = 0; j < results.length; j++) {
 
-//                    if(status == google.maps.DirectionStatus) {
-//                        alert('Not Valid');
-//                    }
+                   if(status == google.maps.DirectionMatrixStatus.NOT_FOUND) {
+                       alert('Not Valid');
+                   }
 
                     outputDiv.innerHTML += origins[i] + ' to ' + destinations[j]
                         + ': ' + results[j].distance.text + ' in '
