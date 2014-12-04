@@ -70,8 +70,10 @@
                         <tr>
                             <th>Start Address</th>
                             <th>Destination Address</th>
-                            <th>Distance Traveled</th>
+                            <th>Distance Traveled (Meters)</th>
                             <th>Emissions</th>
+                            <th>Transportation Mode</th>
+                            <th>Username</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -80,10 +82,16 @@
                             <td id="end"></td>
                             <td id="dist"></td>
                             <td id="emi"></td>
+                            <td id="tran"></td>
+                            <td id="user"></td>
                         </tr>
                         </tbody>
                     </table>
                     <button id="reset" type="button">Reset Emission Data</button>
+                    <button id="refresh" type="button">Refresh Data</button>
+                    <p></p>
+                    <p>*If you wish to reset your emission data, click on the "Reset Emission Data" button below.</p>
+                    <p>Then, click the "Refresh Data" button to refresh the data table.</p>
                 </div>
             </div>
         </div>
@@ -103,7 +111,7 @@
                             <div class="form-group">
                                 <label for="Email">Email</label>
                                 <input type="email" id="Email4Password" class="form-control"
-                                       placeholder="Enter Your Email">
+                                       placeholder="Enter Your Email to Reset Your Password">
                             </div>
                             <!--                            <div class="form-group">
                                                             <label for="OldPassword">Old Password</label>

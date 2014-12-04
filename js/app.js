@@ -5,6 +5,24 @@ Parse.initialize("D09HDt6HuQzXIeXzkPi5rTLfQ8KMPUBwrORQlbBo", "pmEX9dbQy1YmCb9nw7
 
 $(document).ready(function () {
     currentUser = Parse.User.current();
+    if (currentUser == null) {
+        $('#signUp').show();
+        $('#logIn').show();
+        $('#display').hide();
+        $('#logout').hide();
+    } else {
+        $('#signUp').hide();
+        $('#logIn').hide();
+        $('#display').show();
+        $('#logout').show();
+        $('#userDisplay').text(currentUser.attributes.username);
+        $('#display').click(function() {
+            window.location = "account.html";
+        });
+    }
+
+
+
 
     $('#submit').click(function () {
         var user = new Parse.User();

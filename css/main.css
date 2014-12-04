@@ -126,6 +126,14 @@ h6 {
     background: none;
 }
 
+#display {
+    display: none;
+}
+
+#logout {
+    display:none;
+}
+
 /*#g-account-menu {
     padding-right: 0.1em;
 }*/
