@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title></title>
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" type="text/css" href="css/jquery.fullPage.css" />
+    <link rel="stylesheet" type="text/css" href="css/jquery.fullPage.css"/>
 
     <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -21,12 +21,12 @@
                 <span class="icon-bar"></span>
             </button>
             <!--<a class="navbar-brand" href="#">FinalProject</a>-->
-            <a class="navbar-brand" href="#sectionA">Home</a>
+            <a class="navbar-brand" href="#sectionA">EcoCommuter</a>
 
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav" role="tablist">
-                <!--<li class="active"><a href="#sectionA">Home</a></li>-->
+                <!--<li class="active"><a href="#sectionA">EcoCommuter</a></li>-->
                 <!--                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Page 1 <span class="caret"></span></a>
                                     <ul class="dropdown-menu">
                                         <li><a href="#">Page 1-1</a></li>
@@ -60,51 +60,61 @@
                             </form>
                         </li>
                     </ul>
-                </li><li class="dropdown">
-                <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#" id="logIn">
-                    <i class="glyphicon glyphicon-user"></i>Log In <span class="caret"></span></a>
-                <ul id="g-account-menu" class="dropdown-menu" role="menu">
-                    <!--<li id="signUp"><a href="#">Sign Up</a></li>-->
-                    <li id="loginForm">
-                        <form name="signUpForm" id="form">
-                            <label for="username">Username</label>
-                            <input type="text" id="loginusername" placeholder="Username" required>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#" id="logIn">
+                        <i class="glyphicon glyphicon-user"></i>Log In <span class="caret"></span></a>
+                    <ul id="g-account-menu" class="dropdown-menu" role="menu">
+                        <!--<li id="signUp"><a href="#">Sign Up</a></li>-->
+                        <li id="loginForm">
+                            <form name="signUpForm" id="form">
+                                <div id="hide">
+                                    <label for="username">Username</label>
+                                    <input type="text" id="loginusername" placeholder="Username" required>
 
-                            <label for="password">Password</label>
-                            <input type="password" id="loginpassword" placeholder="Password" required>
-
-                            <button id="loginsubmit" type="button">Submit</button>
-                        </form>
-                    </li>
-                </ul>
-            </li>
-                <li id="logout"><a href="#"><span class="glyphicon glyphicon-log-in"></span> Log Out</a></li>
-
-            </ul>
-
-
-            <!--
-                        <ul class="nav navbar-nav navbar-right">
-                            <li class="dropdown">
-                                <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
-                                    <i class="glyphicon glyphicon-user"></i> Account <span class="caret"></span></a>
-                                <ul id="g-account-menu" class="dropdown-menu" role="menu">
-                                    <li id="signUp"><a href="#">Sign Up</a></li>
-                                    <li id="login"><a href="#">Login</a></li>
-                                </ul>
-
-                            </li>
-                        </ul>
-            -->
-
-
+                                    <label for="password">Password</label>
+                                    <input type="password" id="loginpassword" placeholder="Password" required>
+                                </div>
+                                <div class="row buttons" id="buttons">
+                                    <div class="col-md-6">
+                                        <button id="loginsubmit" type="button">Submit</button>
+                                    </div>
+                                </div>
         </div>
+        </form>
+        </li>
+        </ul>
+        </li>
+        <!--
+                        <li id="logout"><a href="#"><span class="glyphicon glyphicon-log-in"></span> Log Out</a></li>
+        -->
+
+        </ul>
+
+
+        <!--
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
+                                <i class="glyphicon glyphicon-user"></i> Account <span class="caret"></span></a>
+                            <ul id="g-account-menu" class="dropdown-menu" role="menu">
+                                <li id="signUp"><a href="#">Sign Up</a></li>
+                                <li id="login"><a href="#">Login</a></li>
+                            </ul>
+
+                        </li>
+                    </ul>
+        -->
+
+
+    </div>
     </div>
 </nav>
 
 <div id="fullpage">
     <div class="section" id="sectionA">
-        <h1>Hello World</h1>
+        <h1>EcoCommuter</h1>
+
         <h2>Calculate your carbon footprint</h2>
     </div>
     <div class="section" id="MapSection">
@@ -113,13 +123,15 @@
             <form role="form">
                 <div class="form-group">
                     <label for="startaddress">Start Address</label>
-                    <input type="text" class="form-control" id="startaddress" placeholder="Enter Your 1st Destination" required>
+                    <input type="text" class="form-control" id="startaddress" placeholder="Enter Your 1st Destination"
+                           required>
                 </div>
                 <div class="form-group">
                     <label for="endaddress">Destination Address</label>
-                    <input type="text" class="form-control" id="endaddress" placeholder="Enter Your 2nd Destination" required>
+                    <input type="text" class="form-control" id="endaddress" placeholder="Enter Your 2nd Destination"
+                           required>
                 </div>
-                <button type="submit"  id="calculate" class="btn btn-default">Calculate</button>
+                <button type="button" id="calculate" class="btn btn-default">Calculate</button>
             </form>
             <div id="outputDiv"></div>
             <div id="emissions"></div>
@@ -127,8 +139,10 @@
     </div>
     <div class="section" id="about">
         <h4>About us</h4>
+
         <p>helps track carbon dioxide (CO2) emissions from transportation.</p>
         <h4>Mission:</h4>
+
         <p> Raise awareness of carbon emission and what we can do to reduce it.
             Come join us in reducing carbon footprints by commuting more eco-friendly!</p>
         <br/>
@@ -142,8 +156,11 @@
         <li>Transportation accounts for 32% of total U.S. emissions</li>
         <li> Amount of CO2 that one gallon of gas produces: 19.4 pounds</li>
         <li>The number of vehicle miles traveled by passenger cars has increased by 35% from 1990-2012</li>
-        <li>The average passenger car in the United States produces just under 1 pound of carbon dioxide per mile traveled.</li>
+        <li>The average passenger car in the United States produces just under 1 pound of carbon dioxide per mile
+            traveled.
+        </li>
         <br/>
+
         <p></p>
     </div>
     <div class="section" id="contactUs">Contact Us</div>

@@ -3,24 +3,25 @@
  */
 Parse.initialize("D09HDt6HuQzXIeXzkPi5rTLfQ8KMPUBwrORQlbBo", "pmEX9dbQy1YmCb9nw7ekEOko2eSntIMbvr3LgZqV");
 
-$(document).ready(function() {
+$(document).ready(function () {
+    currentUser = Parse.User.current();
 
-
-    $('#logout').click( function() {
-            Parse.User.logOut();
-            $('#logout').hide();
-            $('#signUp').show();
-            $('#logIn').show();
-    });
-
-    $('#submit').click(function() {
+    $('#submit').click(function () {
         var user = new Parse.User();
         user.set("username", $('#username').val());
         user.set("password", $("#password").val());
         user.set("email", $('#email').val());
-        user.signUp( null, {
-            success: function(user) {
-                //Need to show username on nav bar
+        user.signUp(null, {
+            success: function (user) {
+                alert('You have successfully made an EcoCommuter account');
+                Parse.User.logIn($('#username').val(), $("#password").val(), {
+                    success: function (user) {
+                        window.location = "account.html";
+                        var currentUser = Parse.User.current();
+                        $('#uName').text(currentUser.attributes.username);
+
+                    }
+                });
             }
         });
     });
@@ -28,19 +29,17 @@ $(document).ready(function() {
     $("#loginsubmit").click(function () {
         Parse.User.logIn($('#loginusername').val(), $("#loginpassword").val(), {
             success: function (user) {
-                console.log("User logged in");
-                $('#logout').show();
-                $('#signUp').hide();
-                $('#logIn').hide();
+                window.location = "account.html";
+                var currentUser = Parse.User.current();
+                $('#uName').text(currentUser.attributes.username);
+            },
+            error: function (user, error) {
+                alert('Wrong Password. Please Try Again')
             }
         })
     });
 
-    $('#login').click(function() {
-        alert('it works');
-    });
-
-    $('body').scrollspy({ target: '.navbar-custom' });
+    $('body').scrollspy({target: '.navbar-custom'});
 
 
     $('[data-spy="scroll"]').each(function () {
@@ -56,11 +55,11 @@ $(document).ready(function() {
     var geocoder;
     var directionsDisplay;
     var directionsService = new google.maps.DirectionsService();
-//    var addr1 = 'University of Washington, Seattle, WA';
-//    var addr2 = "Seattle University, Seattle, WA";
     var addr1;
     var addr2;
     var mode;
+    var distance;
+    var value;
     var mapElem = document.getElementById('map');
     var center = {
         lat: 47.6,
@@ -73,7 +72,7 @@ $(document).ready(function() {
 
     //We need to set start and end destinations, as well as travel mode.
     //This should be done in the initialize function
-    $("#calculate").click(function() {
+    $("#calculate").click(function () {
         initialize();
         addr1 = $("#startaddress").val();
         addr2 = $("#endaddress").val();
@@ -100,7 +99,7 @@ $(document).ready(function() {
     }
 
     function placeMarkers() {
-        geocoder.geocode({address: addr1}, function(results, status) {
+        geocoder.geocode({address: addr1}, function (results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
                 var coords = results[0].geometry.location;
                 var marker = new google.maps.Marker({
@@ -110,7 +109,7 @@ $(document).ready(function() {
             }
 
         });
-        geocoder.geocode({address: addr2}, function(results, status) {
+        geocoder.geocode({address: addr2}, function (results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
                 var coords = results[0].geometry.location;
                 var marker = new google.maps.Marker({
@@ -124,12 +123,12 @@ $(document).ready(function() {
 
     function calcRoute() {
         var request = {
-            origin:addr1,
+            origin: addr1,
             destination: addr2,
             travelMode: google.maps.TravelMode.DRIVING
         };
-        directionsService.route(request, function(response, status) {
-            if(status == google.maps.DirectionsStatus.OK) {
+        directionsService.route(request, function (response, status) {
+            if (status == google.maps.DirectionsStatus.OK) {
                 directionsDisplay.setDirections(response);
             }
         });
@@ -137,7 +136,7 @@ $(document).ready(function() {
 
     function calculateDistances() {
         var service = new google.maps.DistanceMatrixService();
-        service.getDistanceMatrix ({
+        service.getDistanceMatrix({
             origins: [addr1],
             destinations: [addr2],
             travelMode: google.maps.TravelMode.DRIVING,
@@ -160,14 +159,12 @@ $(document).ready(function() {
                 var results = response.rows[i].elements;
                 for (var j = 0; j < results.length; j++) {
 
-                   if(status == google.maps.DirectionMatrixStatus.NOT_FOUND) {
-                       alert('Not Valid');
-                   }
 
                     outputDiv.innerHTML += origins[i] + ' to ' + destinations[j]
-                        + ': ' + results[j].distance.text + ' in '
-                        + results[j].duration.text + '<br>';
+                    + ': ' + results[j].distance.text + ' in '
+                    + results[j].duration.text + '<br>';
                     calculateEmissions(results[j].distance.value);
+                    distance = results[j].distance.text;
                 }
             }
         }
@@ -175,15 +172,31 @@ $(document).ready(function() {
 
     function calculateEmissions(distance) {
         var result = 0;
-        if(mode == "DRIVING") {
+        if (mode == "DRIVING") {
             result = (0.96 * distance);
-        } else if(mode == "TRANSIT") {
+        } else if (mode == "TRANSIT") {
             result = (0.64 * distance);
         }
         var total = (result / 1609.344);
-        var value = total.toFixed(2);
+        value = total.toFixed(2);
         var emissions = document.getElementById('emissions');
         emissions.innerHTML = "Total emissions: " + value;
+
+        var data = Parse.Object.extend("emissionData");
+        var emissionData = new data();
+        emissionData.set("StartAddress", $("#startaddress").val());
+        emissionData.set("DestinationAddress", $("#endaddress").val());
+        emissionData.set("DistancedTraveled", distance);
+        emissionData.set("Emissions", value);
+        emissionData.set("Username", currentUser.attributes.username);
+        emissionData.save(null, {
+            success: function () {
+                console.log('it worked!');
+            },
+            error: function (emissionData, error) {
+                console.log(error.message);
+            }
+        });
     }
 });
 
